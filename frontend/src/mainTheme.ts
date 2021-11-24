@@ -7,9 +7,8 @@ const theme = createTheme({
                 body: {
                     height: '100vh',
                     margin: 0,
-                    padding: 0,
-                    overflow: 'hidden',
-                    position: 'relative'
+                    padding: 16,
+                    overflow: 'hidden'
                 },
                 '*::-webkit-scrollbar': {
                     width: '0.5em'

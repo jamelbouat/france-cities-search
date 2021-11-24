@@ -1,9 +1,20 @@
+let timeoutStorage: NodeJS.Timeout;
+let timeoutQuery: NodeJS.Timeout;
 
-let timeout: NodeJS.Timeout;
+const throttleSaveToStorage = (func: () => void, delay: number): void => {
+    clearTimeout(timeoutStorage);
+    if (func !== undefined && delay !== undefined) {
+        timeoutStorage = setTimeout(func, delay);
+    }};
 
-export const throttle = (func: () => void, time: number): void => {
-    clearTimeout(timeout);
-    if (func !== undefined && time !== undefined) {
-        timeout = setTimeout(func, time);
+const throttleQuery = (func: () => void, delay: number): void => {
+    clearTimeout(timeoutQuery);
+    if (func !== undefined && delay !== undefined) {
+        timeoutQuery = setTimeout(func, delay);
     }
+};
+
+export {
+    throttleQuery,
+    throttleSaveToStorage
 };

@@ -6,7 +6,7 @@ import { searchCitiesReducer } from './searchCitiesReducer';
 
 const createRootReducer = (history: History): Reducer => combineReducers({
     router: connectRouter(history),
-    searchCitiesState: searchCitiesReducer,
+    searchCitiesState: searchCitiesReducer
 });
 
 export default createRootReducer;

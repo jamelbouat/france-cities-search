@@ -8,7 +8,7 @@ import { ROUTES } from './constants';
 import { getStateFromSessionStorage } from './utils/sessionStorage';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const history = createBrowserHistory({ basename: ROUTES.CITIES });
+const history = createBrowserHistory({ basename: ROUTES.HOME });
 const initialState = getStateFromSessionStorage() || {};
 
 const middlewares = [

@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Theme, Typography } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
+import ProgressIndicator from './ProgressIndicator';
+
 const useStyles = makeStyles((theme: Theme) => ({
     layout: {
-        padding: theme.spacing(1),
+        padding: theme.spacing(2),
         backgroundColor: '#d2e5e9',
-        margin: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+        borderRadius: 10,
+        zIndex: -1
     },
     field: {
         backgroundColor: '#f9f9f9'
@@ -15,21 +19,27 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface Props {
-    isLoading: boolean,
-    searchCities: (searchText: string) => void
+    isLoading: boolean;
+    searchText: string;
+    searchCities: (searchText: string) => void;
 }
 
 const NavBar: React.FC<Props> = (props) => {
     const classes = useStyles();
-    const { isLoading, searchCities } = props;
+    const { isLoading, searchText, searchCities } = props;
+    const [ text, setText ] = useState(() => searchText);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        const searchText = event.target.value;
-        searchText && searchCities(searchText);
+    const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        const newSearchText = event.target.value;
+        setText(newSearchText);
+        searchCities(newSearchText);
     };
 
     return (
-        <>
+        <div>
+            {
+                isLoading && <ProgressIndicator/>
+            }
             <form>
                 <Grid container className={ classes.layout }>
                     <Grid item xs={ 2 }>
@@ -39,6 +49,7 @@ const NavBar: React.FC<Props> = (props) => {
                     </Grid>
                     <Grid item xs={ 10 }>
                         <TextField
+                            autoFocus
                             fullWidth
                             name='searchText'
                             label='...une ville, un code postal'
@@ -46,12 +57,14 @@ const NavBar: React.FC<Props> = (props) => {
                             variant='outlined'
                             className={ classes.field }
                             size='small'
-                            onChange={ handleChange }
+                            value={ text }
+                            onChange={ handleTextChange }
                         />
                     </Grid>
                 </Grid>
             </form>
-        </>
+        </div>
+
     );
 };
 

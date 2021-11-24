@@ -16,8 +16,18 @@ const citiesMetropolitanSelector: Selector<RootState, ICity[]> = (state) => {
     return cities.filter(city => city.codePostal.slice(0, 2) !== '97');
 };
 
+const isLoadingSelector: Selector<RootState, boolean> = (state) => {
+    return state.searchCitiesState.isLoading;
+};
+
+const searchTextSelector: Selector<RootState, string> = (state) => {
+    return state.searchCitiesState.searchText;
+};
+
 export {
     citiesSelector,
     citiesDOMTOMSelector,
-    citiesMetropolitanSelector
+    citiesMetropolitanSelector,
+    isLoadingSelector,
+    searchTextSelector
 };

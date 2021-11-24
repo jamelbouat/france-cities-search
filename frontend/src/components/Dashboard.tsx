@@ -1,53 +1,50 @@
 import React from 'react';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import { Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
 import { ICity } from '../interfaces/city';
 import NavBar from './NavBar';
-import CitiesList from './CitiesList';
-
-const useStyles = makeStyles((theme: Theme) => ({
-    layout: {
-        height: '90%',
-        marginBottom: '20'
-    },
-    gridWrapper: {
-        margin: theme.spacing(2),
-        backgroundColor: '#d2e5e9'
-    }
-}));
+import CitiesContainer from './CitiesContainer';
 
 interface Props {
     isLoading: boolean;
+    searchText: string;
     citiesDOMTOMSelector: ICity[];
     citiesMetropolitanSelector: ICity[];
-    searchCities: (searchText: string) => void
+    searchCities: (searchText: string) => void;
+    updateSearchParams: (searchText: string) => void;
 }
 
 const Dashboard: React.FC<Props> = (props) => {
-    const classes = useStyles();
-    const { isLoading, citiesDOMTOMSelector, citiesMetropolitanSelector, searchCities } = props;
+    const {
+        isLoading,
+        searchText,
+        citiesDOMTOMSelector,
+        citiesMetropolitanSelector,
+        searchCities,
+        updateSearchParams
+    } = props;
 
     const handleSearchCities = (searchText: string) => {
         searchCities(searchText);
+        updateSearchParams(searchText);
     };
 
     return(
-        <>
+        <div>
             <NavBar
+                searchText={ searchText }
                 isLoading={ isLoading }
                 searchCities={ handleSearchCities }
             />
-            <Grid container className={ classes.layout }>
-                <Grid item xs={ 5 } className={ classes.gridWrapper }>
-                    <CitiesList cities={ citiesMetropolitanSelector }/>
+            <Grid container spacing={ 2 }>
+                <Grid item xs={ 6 }>
+                    <CitiesContainer title={ 'Villes de métropole' } cities={ citiesMetropolitanSelector }/>
                 </Grid>
-                <Grid item xs={ 5 } className={ classes.gridWrapper }>
-                    <CitiesList cities={ citiesDOMTOMSelector }/>
+                <Grid item xs={ 6 }>
+                    <CitiesContainer title={ ' Villes d\'outre-mer' } cities={ citiesDOMTOMSelector }/>
                 </Grid>
             </Grid>
-        </>
+        </div>
     );
 };
 
